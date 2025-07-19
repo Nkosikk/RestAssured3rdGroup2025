@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ReqresAPI {
+public class ReqresAPITest {
 
 
 
