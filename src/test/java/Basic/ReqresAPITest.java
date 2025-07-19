@@ -52,6 +52,7 @@ public class ReqresAPITest {
         Assert.assertNotNull("User ID should not be null", existingId);
 
     }
+
     @Test
     public void c_updateUser() {
         String baseUrl = "https://reqres.in";
@@ -72,8 +73,6 @@ public class ReqresAPITest {
         response.then().log().all();
         Assert.assertEquals(200, response.getStatusCode());
     }
-
-
 
     @Test
     public void d_deleteUser(){
@@ -147,18 +146,44 @@ public class ReqresAPITest {
         Assert.assertEquals(400, response.getStatusCode());
         Assert.assertTrue(response.getBody().asString().contains("error"));
     }
+    @Test
+    public void h_createUserWithBoundaryValues() {
+        String baseUrl = "https://reqres.in";
+        String path = "/api/users/";
+        String apiKey = "reqres-free-v1";
 
+        // Minimum length
+        String minName = "A";
+        String minJob = "B";
+        String minPayload = "{ \"name\": \"" + minName + "\", \"job\": \"" + minJob + "\" }";
 
+        Response minResponse = RestAssured.given()
+                .baseUri(baseUrl)
+                .basePath(path)
+                .header("x-api-key", apiKey)
+                .contentType("application/json")
+                .body(minPayload)
+                .log().all()
+                .post();
 
+        minResponse.then().log().all();
+        Assert.assertEquals(201, minResponse.getStatusCode());
 
+        // Maximum length (255 characters)
+        String maxName = "N".repeat(255);
+        String maxJob = "J".repeat(255);
+        String maxPayload = "{ \"name\": \"" + maxName + "\", \"job\": \"" + maxJob + "\" }";
 
+        Response maxResponse = RestAssured.given()
+                .baseUri(baseUrl)
+                .basePath(path)
+                .header("x-api-key", apiKey)
+                .contentType("application/json")
+                .body(maxPayload)
+                .log().all()
+                .post();
 
-
-
-
-
-
-
-
-
+        maxResponse.then().log().all();
+        Assert.assertEquals(201, maxResponse.getStatusCode());
+    }
 }
