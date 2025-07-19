@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class ReqresAPITest {
 
-
+    public static String existingId;
 
     @Test
     public void a_createUser() {
@@ -47,7 +47,29 @@ public class ReqresAPITest {
 
         response.then().log().all();
         Assert.assertEquals(200, response.getStatusCode());
+
+        existingId = response.jsonPath().getString("data.id");
+        Assert.assertNotNull("User ID should not be null", existingId);
+
     }
+
+    @Test
+    public void c_deleteUser(){
+        String baseUrl = "https://reqres.in";
+        String path = "/api/users/" + existingId;
+        String apiKey = "reqres-free-v1";
+        Response response = RestAssured.given()
+                .baseUri(baseUrl)
+                .basePath(path)
+                .header("x-api-key", apiKey)
+                .log().all()
+                .delete();
+        response.then().log().all();
+        Assert.assertEquals(204, response.getStatusCode());
+
+    }
+
+
 
 
 
