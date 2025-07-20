@@ -33,7 +33,7 @@ public class WeatherAPI {
                 .baseUri(baseUrl)
                 .basePath(path)
                 .contentType(ContentType.JSON)
-                .queryParam("appid", apiKey)
+                .queryParam("appid", apiTKey)
                 .log().all()
                 .body(payload)
                 .post();
@@ -87,5 +87,20 @@ public class WeatherAPI {
 
         int actualStatusCode =response.getStatusCode();
         Assert.assertEquals(actualStatusCode,200);
+    }
+    @Test
+    public void d_deleteWeatherStation(){
+        String baseUrl = "http://api.openweathermap.org";
+        String path = "/data/3.0/stations/" + weatherStationId;
+        String apiKey = "b1589ee5727295072e2272d60dfc6904";
+
+        RestAssured.given()
+                .baseUri(baseUrl)
+                .basePath(path)
+                .queryParam("appid", apiKey)
+                .log().all()
+                .delete()
+                .then()
+                .statusCode(204);
     }
 }
