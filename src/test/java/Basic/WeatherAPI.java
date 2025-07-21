@@ -53,7 +53,7 @@ public class WeatherAPI {
         RestAssured.given()
                 .baseUri(baseUrl)
                 .basePath(path)
-                .queryParam("appid", apiKey)
+                .queryParam("appid", apiKey )
                 .log().all()
                 .get()
                 .then()
