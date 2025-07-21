@@ -23,4 +23,16 @@ public class ReqresAPI {
                 .then()
                 .statusCode(201);
     }
+    @Test
+    public void listAllUsers() {
+        RestAssured.baseURI = "https://reqres.in";
+
+        given()
+                .contentType(ContentType.JSON)
+                .header("x-api-key", "reqres-free-v1")
+                .when()
+                .get("/api/users")
+                .then()
+                .statusCode(200);
+    }
 }
