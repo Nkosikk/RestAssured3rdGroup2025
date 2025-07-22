@@ -51,7 +51,7 @@ public class ResreqAPI {
                 .get();
 
         //response.then().log().all();
-       // Assert.assertEquals(200, response.getStatusCode());
+        // Assert.assertEquals(200, response.getStatusCode());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ResreqAPI {
         String baseUrl = "https://reqres.in";
         String path = "/api/users/" + createdUserId;
         String apiKey = "reqres-free-v1";
-        String payload = "{ \"name\": \"Refilwe\", \"job\": \"Senior Tester\" , \"updatedAt\": \"2023-10-01T12:00:00Z\" }";
+        String payload = "{ \"name\": \"Refilwe\", \"job\": \"Senior Tester\" , \"By\": \"Admin\" }";
 
         Response response = RestAssured.given()
                 .baseUri(baseUrl)
@@ -71,14 +71,34 @@ public class ResreqAPI {
                 .put();
 
 
-        int actualStatusCode =response.getStatusCode();
-        Assert.assertEquals(actualStatusCode,200);
+        int actualStatusCode = response.getStatusCode();
+        Assert.assertEquals(actualStatusCode, 200);
 
         //response.then().log().all();
         //Assert.assertEquals(200, response.getStatusCode());
     }
 
-}
+    @Test
+    public void d_deleteUser() {
+        String baseUrl = "https://reqres.in";
+        String path = "/api/users/" + createdUserId;
+        String apiKey = "reqres-free-v1";
 
+        Response response = RestAssured.given()
+                .baseUri(baseUrl)
+                .basePath(path)
+                .header("x-api-key", apiKey)
+                .contentType("application/json")
+                .log().all()
+                .delete();
+
+        // Log response
+        response.prettyPrint();
+
+        // Status code 204 means "No Content", which is expected after successful deletion
+        int actualStatusCode = response.getStatusCode();
+        Assert.assertEquals("Expected status code 204 for successful deletion", 204, actualStatusCode);
+    }
+}
 
 
