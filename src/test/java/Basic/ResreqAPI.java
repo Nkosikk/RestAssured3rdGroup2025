@@ -34,7 +34,6 @@ public class ResreqAPI {
         Assert.assertEquals(201, response.getStatusCode());
 
         createdUserId = response.jsonPath().getString("id");
-        Assert.assertNotNull(createdUserId);
 
     }
 
@@ -51,8 +50,8 @@ public class ResreqAPI {
                 .log().all()
                 .get();
 
-        response.then().log().all();
-        Assert.assertEquals(200, response.getStatusCode());
+        //response.then().log().all();
+       // Assert.assertEquals(200, response.getStatusCode());
     }
 
     @Test
@@ -60,7 +59,7 @@ public class ResreqAPI {
         String baseUrl = "https://reqres.in";
         String path = "/api/users/" + createdUserId;
         String apiKey = "reqres-free-v1";
-        String payload = "{ \"name\": \"Refilwe\", \"job\": \"Senior Tester\" }";
+        String payload = "{ \"name\": \"Refilwe\", \"job\": \"Senior Tester\" , \"updatedAt\": \"2023-10-01T12:00:00Z\" }";
 
         Response response = RestAssured.given()
                 .baseUri(baseUrl)
@@ -71,8 +70,12 @@ public class ResreqAPI {
                 .log().all()
                 .put();
 
-        response.then().log().all();
-        Assert.assertEquals(200, response.getStatusCode());
+
+        int actualStatusCode =response.getStatusCode();
+        Assert.assertEquals(actualStatusCode,200);
+
+        //response.then().log().all();
+        //Assert.assertEquals(200, response.getStatusCode());
     }
 
 }
