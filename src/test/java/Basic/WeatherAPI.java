@@ -42,6 +42,7 @@ public class WeatherAPI {
         Assert.assertEquals(actualStatusCode,201);
 
         weatherStationId = response.jsonPath().getString("ID");
+        System.out.println(weatherStationId);
     }
 
     @Test
@@ -58,6 +59,7 @@ public class WeatherAPI {
                 .get()
                 .then()
                 .statusCode(200);
+
 
 
     }
