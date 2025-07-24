@@ -16,4 +16,9 @@ public class OpenWeatherTest {
                 .statusCode(201)
                 .contentType("application/json; charset=utf-8");
     }
+
+    @Test(dependsOnMethods = "createWeatherStationTest()")
+    public void getCreatedWeatherStationTest(){
+
+    }
 }
