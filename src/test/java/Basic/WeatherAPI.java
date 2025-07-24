@@ -22,7 +22,7 @@ public class WeatherAPI {
         String path = "/data/3.0/stations";
         String apiKey = "b1589ee5727295072e2272d60dfc6904";
         String payload = "{\n" +
-                "  \"external_id\": \"SF_TEST001\",\n" +
+                "  \"external_id\": \"SF_TEST02001\",\n" +
                 "  \"name\": \"San Francisco Test Station\",\n" +
                 "  \"latitude\": 37.76,\n" +
                 "  \"longitude\": -122.43,\n" +
@@ -36,7 +36,13 @@ public class WeatherAPI {
                 .queryParam("appid", apiKey)
                 .log().all()
                 .body(payload)
-                .post();
+                .post()
+                .then()
+                .log()
+                .all()
+                .extract().response();
+
+
 
         int actualStatusCode = response.getStatusCode();
         Assert.assertEquals(actualStatusCode, 201);
@@ -57,6 +63,8 @@ public class WeatherAPI {
                 .log().all()
                 .get()
                 .then()
+                .log()
+                .all()
                 .statusCode(200);
 
 
@@ -83,7 +91,11 @@ public class WeatherAPI {
                 .queryParam("appid", apiKey)
                 .log().all()
                 .body(payload)
-                .put();
+                .put()
+                .then()
+                .log()
+                .all()
+                .extract().response();
 
         int actualStatusCode = response.getStatusCode();
         Assert.assertEquals(actualStatusCode, 200);
@@ -103,6 +115,8 @@ public class WeatherAPI {
                 .log().all() // Log request details
                 .delete(weatherStationId) // Pass station ID as path parameter
                 .then()
+                .log()
+                .all()
                 .statusCode(204); // Assert that status code is 200 (OK)
 
 

@@ -14,93 +14,90 @@ import java.nio.file.Path;
 public class ReqresAPI {
     static String userId; // Stores the user ID extracted from the response
 
+
     @Test
     public void a_getUsers() {
-        // Set base URL, path, and API key
         String baseUrl = "https://reqres.in";
-        String path = "/api/users";
+        String path = "/api/users/2";
         String apiKey = "reqres-free-v1";
 
-        // Send GET request to fetch user list
         Response response = RestAssured.given()
                 .baseUri(baseUrl)
                 .basePath(path)
                 .contentType(ContentType.JSON)
+                .header("x-api-key", apiKey)
                 .queryParam("page", 2)
-                .queryParam("api_key", apiKey)
                 .log().all()
                 .get();
 
-        int actualStatusCode = response.getStatusCode();
-        Assert.assertEquals(200, actualStatusCode); // Assert response status code is 200
-
-        // Extract first user's ID from response and store in static variable
+        Assert.assertEquals(200, response.getStatusCode());
         userId = response.jsonPath().getString("data[0].id");
-        System.out.println("First user ID: " + userId); // Print the user ID
+        System.out.println("First user ID: " + userId);
     }
 
     @Test
     public void b_createUser() {
-        // Set base URL, path (with userId), and API key
         String baseUrl = "https://reqres.in";
-        String path = "/api/users" + userId; // Appends userId to path
+        String path = "/api/users";
         String apiKey = "reqres-free-v1";
 
-        // JSON payload for user creation
         String payload = "{ \"name\": \"Morpheus\", \"job\": \"Tech Leader\" }";
 
-        // Send POST request to create user
-        RestAssured.given()
+        Response response = RestAssured.given()
                 .baseUri(baseUrl)
                 .basePath(path)
                 .contentType(ContentType.JSON)
-                .queryParam("api_key", apiKey)
+                .header("x-api-key", apiKey)
                 .body(payload)
                 .log().all()
                 .post()
                 .then()
-                .statusCode(201); // Assert response status code is 201 (Created)
+                .log()
+                .all()
+                .extract().response();
+
+        Assert.assertEquals(201, response.getStatusCode());
+        // Optionally update userId if needed:
+        // userId = response.jsonPath().getString("id");
     }
 
     @Test
     public void c_updatingUser() {
-        // Set base URL, path (with userId), and API key
         String baseUrl = "https://reqres.in";
-        String path = "/api/users/2" + userId; // Appends userId to path
+        String path = "/api/users/" + userId;
         String apiKey = "reqres-free-v1";
 
-        // JSON payload for updating user
-        String payload = "{ \"name\": \"Morpheus\", " +
-                "\"job\": \"Delivery Manager\" }";
+        String payload = "{ \"name\": \"Morpheus\", \"job\": \"Delivery Manager\" }";
 
-        // Send POST request to update user
-        RestAssured.given()
+        Response response = RestAssured.given()
                 .baseUri(baseUrl)
                 .basePath(path)
                 .contentType(ContentType.JSON)
-                .queryParam("api_key", apiKey)
+                .header("x-api-key", apiKey)
                 .body(payload)
                 .log().all()
-                .post()
+                .put()
                 .then()
-                .statusCode(201); // Assert response status code is 201 (Created)
+                .log()
+                .all()
+                .extract().response();
 
+        Assert.assertEquals(200, response.getStatusCode());
     }
 
     @Test
     public void d_deleting() {
         String baseUrl = "https://reqres.in";
-        String path = "/api/users/2" + userId;
+        String path = "/api/users/" + userId;
         String apiKey = "reqres-free-v1";
 
-        //DELETE request to remove the weather station by ID
-        RestAssured.given()
-                .baseUri(baseUrl) // Set base URI
-                .basePath(path) // Set base path
-                .queryParam("appid", apiKey) // Add API key as query parameter
-                .log().all() // Log request details
-                .delete(userId) // Pass station ID as path parameter
-                .then()
-                .statusCode(401); // Assert that status code is 200 (OK)
+        Response response = RestAssured.given()
+                .baseUri(baseUrl)
+                .basePath(path)
+                .header("x-api-key", apiKey)
+                .log().all()
+                .delete();
+
+        Assert.assertEquals(204, response.getStatusCode());
     }
 }
