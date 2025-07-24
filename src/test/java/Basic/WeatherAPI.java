@@ -40,7 +40,7 @@ public class WeatherAPI {
 
         int actualStatusCode = response.getStatusCode();
         Assert.assertEquals(actualStatusCode, 201);
-
+        System.out.println(response.asString());
         weatherStationId = response.jsonPath().getString("ID");
     }
 
@@ -105,7 +105,9 @@ public class WeatherAPI {
                 .delete()
                 .then()
                 .statusCode(204);
-
+       // int statusCode = Response.getStatusCode();
+        System.out.println("DELETE Response: " + weatherStationId);
+       // Assert.assertEquals(204, statusCode);
 
     }
 
