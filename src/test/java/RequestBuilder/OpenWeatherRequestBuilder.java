@@ -29,5 +29,7 @@ public class OpenWeatherRequestBuilder {
 // Print response
         System.out.println("Response Code: " + response.getStatusCode());
         System.out.println("Response Body:\n" + response.getBody().prettyPrint());
+
+        return response;
     }
 }
