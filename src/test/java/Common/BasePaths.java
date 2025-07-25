@@ -1,10 +1,10 @@
 package Common;
 
 public class BasePaths {
-
+    //base url for weather to be added here
     public  static String openWeather_baseUrl = "http://api.openweathermap.org"; // Public static variable for base URL will be able to be access by all classes
-    //base url for reqres to be added here
-
+   // add the rest of the paths here
+    public static String OpenWeather_path = "/data/3.0/stations";
 
 
 }
