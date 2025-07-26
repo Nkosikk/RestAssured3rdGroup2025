@@ -6,5 +6,9 @@ public class BasePaths {
    // add the rest of the paths here
     public static String OpenWeather_path = "/data/3.0/stations";
 
+    // adding New endpoints for Reqres
+    public static String reqres_baseUrl = "https://reqres.in";
+    public  static String reqres_path = "/api/users";
+
 
 }

@@ -1,25 +1,43 @@
 package Test;
 
 import RequestBuilder.OpenWeatherRequestBuilder;
+import io.restassured.internal.RestAssuredResponseOptionsGroovyImpl;
+import io.restassured.internal.RestAssuredResponseOptionsImpl;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OpenWeatherTest {
 
     @Test
-    public void  createWeatherStationTest() {
-        // This method will contain the test logic for creating a weather station
-        // It will use the OpenWeatherPayloadBuilder to create the payload
-        // and then send a POST request to the OpenWeather API
-        // The response will be validated to ensure the station was created successfully
-
+    public void a_createWeatherStationTest() {
         OpenWeatherRequestBuilder.CreateopenweatherResponse()
                 .then()
                 .log()
                 .all()
                 .assertThat()
                 .statusCode(201);
-
-
-
     }
+
+    @Test
+    public void b_getWeatherStationTest() {
+        OpenWeatherRequestBuilder.GetopenweatherResponse()
+                .then()
+                .log()
+                .all()
+                .assertThat()
+                .statusCode(200);
+    }
+
+    @Test
+    public void c_updateWeatherStationTest() {
+        OpenWeatherRequestBuilder.UpdateopenweatherResponse()
+                .then()
+                .log()
+                .all()
+                .assertThat()
+                .statusCode(200);
+    }
+
 }

@@ -22,14 +22,39 @@ public class OpenWeatherRequestBuilder {
                 .contentType(ContentType.JSON)
                 .queryParam("appid", openWeather_apiKey)
                 .log().all()
-                .body( station.toString())
+                .body(OpenWeatherPayloadBuilder.CreateWeatherStationBody().toString())
                 .post();
 
         weatherStationId = response.jsonPath().getString("ID");
 // Print response
-        System.out.println("Response Code: " + response.getStatusCode());
-        System.out.println("Response Body:\n" + response.getBody().prettyPrint());
+       // System.out.println("Response Body:\n"..prettyPrint());
+        //System.out.println("Response is:"+response.prettyPrint());
 
         return response;
     }
+
+    public static Response UpdateopenweatherResponse() {
+        Response response = RestAssured.given()
+                .baseUri(openWeather_baseUrl)
+                .basePath(OpenWeather_path + "/" + weatherStationId)
+                .contentType(ContentType.JSON)
+                .queryParam("appid", openWeather_apiKey)
+                .log().all()
+                .body(OpenWeatherPayloadBuilder.updateWeatherStationBody().toString())
+                .put();
+
+        return response;
+    }
+
+    public  static Response GetopenweatherResponse() {
+        Response response = RestAssured.given()
+                .baseUri(openWeather_baseUrl)
+                .basePath(OpenWeather_path + "/" + weatherStationId)
+                .queryParam("appid", openWeather_apiKey)
+                .log().all()
+                .get();
+
+        return response;
+    }
+
 }
