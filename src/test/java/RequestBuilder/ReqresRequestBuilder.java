@@ -19,9 +19,9 @@ public class ReqresRequestBuilder {
                 .baseUri(reqres_baseUrl)
                 .basePath(reqres_path)
                 .contentType(ContentType.JSON)
-                .queryParam("x-api-key", reqres_apiKey)
-                .log().all()
+                .header("x-api-key", reqres_apiKey)
                 .body(ReqresPayloadBuilder.CreateReqresBody().toString())
+                .log().all()
                 .post();
 
         ReqId = response.jsonPath().getString("ID");
