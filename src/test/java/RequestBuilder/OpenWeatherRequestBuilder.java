@@ -3,11 +3,11 @@ package RequestBuilder;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.Assert;
 
-import static Common.Authorisation.openWeatherApiKey;
+import static Common.Authorisations.openWeatherApiKey;
 import static Common.BasePaths.openWeatherBaseUrl;
 import static Common.BasePaths.openWeatherPath;
+import static PayloadBuilder.OpenWeatherPayloadBuilder.createWeatherStationBody;
 
 public class OpenWeatherRequestBuilder {
 
@@ -20,8 +20,7 @@ public class OpenWeatherRequestBuilder {
                 .contentType(ContentType.JSON)
                 .queryParam("appid", openWeatherApiKey)
                 .log().all()
-//              .body(PayloadBuilder.OpenWeatherPayloadBuilder.createWeatherStationBody())
-                .body(createOpenWeatherResponse())
+                .body(createWeatherStationBody())
                 .post()
                 .then()
                 .extract().response();
@@ -29,6 +28,29 @@ public class OpenWeatherRequestBuilder {
         weatherStationId = response.jsonPath().getString("ID");
         return response;
 
+    }
+    public static Response getOpenWeatherResponse() {
 
+        return RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath + "/" + weatherStationId)
+                .queryParam("appid", openWeatherApiKey)
+                .log().all()
+                .get()
+                .then()
+                .extract().response();
+    }
+    public static Response updateOpenWeatherResponse() {
+
+        return RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath + "/" + weatherStationId)
+                .contentType(ContentType.JSON)
+                .queryParam("appid", openWeatherApiKey)
+                .log().all()
+                .body(createWeatherStationBody())
+                .put()
+                .then()
+                .extract().response();
     }
 }
