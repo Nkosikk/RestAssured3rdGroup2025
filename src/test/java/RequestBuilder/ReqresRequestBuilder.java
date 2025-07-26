@@ -6,6 +6,8 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
+import static Common.Aurhorization.openWeather_apiKey;
+import static Common.Aurhorization.reqres_apiKey;
 import static Common.BasePaths.*;
 
 public class ReqresRequestBuilder {
@@ -17,7 +19,7 @@ public class ReqresRequestBuilder {
                 .baseUri(reqres_baseUrl)
                 .basePath(reqres_path)
                 .contentType(ContentType.JSON)
-                .queryParam("x-api-key", ReqId)
+                .queryParam("x-api-key", reqres_apiKey)
                 .log().all()
                 .body(ReqresPayloadBuilder.CreateReqresBody().toString())
                 .post();
