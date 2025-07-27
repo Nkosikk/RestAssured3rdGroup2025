@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class WeatherAPI {
+public class ReqResAPI {
 
     static String userId;
 
@@ -31,7 +31,10 @@ public class WeatherAPI {
                 .header("Content-Type", "application/json")
                 .header("x-api-key", apiKey)
                 .body(payload)
-                .post();
+                .post()
+                .then()
+                .log().all()
+                .extract().response();
 
         System.out.println("Status Code: " + response.getStatusCode());
         System.out.println("Response Body: " + response.asString());
