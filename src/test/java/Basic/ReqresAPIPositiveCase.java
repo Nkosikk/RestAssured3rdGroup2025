@@ -56,6 +56,29 @@ public void a_createUser() {
                 .then()
                 .statusCode(200);
     }
+    @Test
+    public void c_updateUser() {
+        String baseUrl = "https://reqres.in";
+        String pathUrl = "/api/users/" + UserID;
+        String apiKey = "reqres-free-v1";
+        String updatedPayload = "{ \"name\": \"morpheus\", \"job\": \"zion resident\" }";
+
+        Response response = RestAssured.given()
+                .baseUri(baseUrl)
+                .basePath(pathUrl)
+                .contentType(ContentType.JSON)
+                .header("x-api-key", apiKey)
+                .body(updatedPayload)
+                .put();
+
+        // Assert that the status code is 200 (OK)
+        Assert.assertEquals(200, response.getStatusCode());
+
+        // Print the response
+        System.out.println("Status code: " + response.getStatusCode());
+        System.out.println("Updated Response Body: " + response.getBody().asString());
+    }
+
 
 }
 
