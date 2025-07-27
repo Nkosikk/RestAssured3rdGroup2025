@@ -78,6 +78,25 @@ public void a_createUser() {
         System.out.println("Status code: " + response.getStatusCode());
         System.out.println("Updated Response Body: " + response.getBody().asString());
     }
+    @Test
+    public void d_deleteUser() {
+        String baseUrl = "https://reqres.in";
+        String pathUrl = "/api/users/" + UserID; // Use the UserID from the createUser test
+        String apiKey = "reqres-free-v1";
+
+        Response response = RestAssured.given()
+                .baseUri(baseUrl)
+                .basePath(pathUrl)
+                .header("x-api-key", apiKey)
+                .delete();
+
+        // Assert that the status code is 204 (No Content)
+        Assert.assertEquals(204, response.getStatusCode());
+
+        // Print the status code to confirm deletion
+        System.out.println("Status code: " + response.getStatusCode());
+        System.out.println("User with ID " + UserID + " deleted successfully.");
+    }
 
 
 }
