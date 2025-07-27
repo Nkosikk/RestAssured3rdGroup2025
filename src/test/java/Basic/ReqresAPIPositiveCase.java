@@ -3,15 +3,18 @@ package Basic;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ReqresAPI {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class ReqresAPIPositiveCase {
 
 static String UserID;
 
 @Test
-public void createUser() {
+public void a_createUser() {
     String baseUrl = "https://reqres.in";
     String pathUrl = "/api/users";
     String apiKey = "reqres-free-v1";
@@ -37,5 +40,22 @@ public void createUser() {
     UserID = response.jsonPath().getString("id");
     System.out.println("User ID created: " + UserID);
     }
+
+    @Test
+    public void b_getUser() {
+        String baseUrl = "https://reqres.in";
+        String pathUrl = "/api/users/" + UserID; // Assuming UserID is set from the previous test
+        String apiKey = "reqres-free-v1";
+
+        RestAssured.given()
+                .baseUri(baseUrl)
+                .basePath(pathUrl)
+                .header("x-api-key", apiKey)
+                .log().all()
+                .get()
+                .then()
+                .statusCode(200);
+    }
+
 }
 
