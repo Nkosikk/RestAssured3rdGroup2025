@@ -79,7 +79,29 @@ public void a_createUser() {
         System.out.println("Updated Response Body: " + response.getBody().asString());
     }
     @Test
-    public void d_deleteUser() {
+    public void d_patchUser() {
+        String baseUrl = "https://reqres.in";
+        String pathUrl = "/api/users/" + UserID;
+        String apiKey = "reqres-free-v1";
+        String updatedPayload = "{ \"name\": \"zulumega\", \"job\": \"ekuphakameni\" }";
+
+        Response response = RestAssured.given()
+                .baseUri(baseUrl)
+                .basePath(pathUrl)
+                .contentType(ContentType.JSON)
+                .header("x-api-key", apiKey)
+                .body(updatedPayload)
+                .patch();
+
+        // Assert that the status code is 200 (OK)
+        Assert.assertEquals(200, response.getStatusCode());
+
+        // Print the response
+        System.out.println("Status code: " + response.getStatusCode());
+        System.out.println("Updated Response Body: " + response.getBody().asString());
+    }
+    @Test
+    public void e_deleteUser() {
         String baseUrl = "https://reqres.in";
         String pathUrl = "/api/users/" + UserID; // Use the UserID from the createUser test
         String apiKey = "reqres-free-v1";
