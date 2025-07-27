@@ -8,9 +8,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import java.util.PriorityQueue;
-
-
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) // orders tests alphabetically
 public class WeatherAPI {
 
