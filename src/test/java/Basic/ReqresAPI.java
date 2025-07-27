@@ -9,7 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class ReqresAPIPositiveCase {
+public class ReqresAPI {
 
 static String UserID;
 
