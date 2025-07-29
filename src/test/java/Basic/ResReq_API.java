@@ -28,13 +28,19 @@ public class ResReq_API {
                 .baseUri(baseUrl)
                 .basePath(path)
                 .contentType(ContentType.JSON)
-                .queryParam("x-api-key", apiKey)
+                .header("x-api-key", apiKey)
+                //.queryParam("x-api-key", apiKey)
                 .log().all()
                 .body(payload)
-                .post();
+                //.log().all()
+                .post()
+                .then()
+                .log().all()
+                .extract().response();
 
-        //int actualStatusCode =response.getStatusCode();
-        //Assert.assertEquals(actualStatusCode,201);
+
+        int actualStatusCode =response.getStatusCode();
+        Assert.assertEquals(actualStatusCode,201);
 
         UserId = response.jsonPath().getString("ID");
     }
@@ -45,20 +51,25 @@ public class ResReq_API {
         String path = "/api/users" + UserId;
         String apiKey = "reqres-free-v1";
 
-        RestAssured.given()
+        Response response = RestAssured.given()
                 .baseUri(baseUrl)
                 .basePath(path)
-                .queryParam("x-api-key", apiKey)
+                .header("x-api-key", apiKey)
                 .log().all()
-                .get();
-               // .then()
-                //.statusCode(200);
+                .get()
+                //.statusCode(200)
+                .then()
+                .log().all()
+                .extract().response();
+
+        int actualStatusCode =response.getStatusCode();
+        Assert.assertEquals(actualStatusCode,200);
     }
 
     @Test
     public void c_updateAUser(){
         String baseUrl = "https://reqres.in";
-        String path = "/api/users" + UserId;
+        String path = "/api/users/" + UserId;
         String apiKey = "reqres-free-v1";
 
         String payload = "{\n" +
@@ -70,13 +81,16 @@ public class ResReq_API {
                 .baseUri(baseUrl)
                 .basePath(path)
                 .contentType(ContentType.JSON)
-                .queryParam("x-api-key", apiKey)
+                .header("x-api-key", apiKey)
                 .log().all()
                 .body(payload)
-                .put();
+                .put()
+                .then()
+                .log().all()
+                .extract().response();
 
-        //int actualStatusCode =response.getStatusCode();
-        //ssert.assertEquals(actualStatusCode,200);
+        int actualStatusCode =response.getStatusCode();
+        Assert.assertEquals(actualStatusCode,200);
     }
 
     @Test
@@ -89,11 +103,11 @@ public class ResReq_API {
                 .baseUri(baseUrl)
                 .basePath(path)
                 .contentType(ContentType.JSON)
-                .queryParam("x-api-key", apiKey)
+                .header("x-api-key", apiKey)
                 .log().all()
                 .delete();
 
-        //int actualStatusCode =response.getStatusCode();
-        //ssert.assertEquals(actualStatusCode,204);
+        int actualStatusCode =response.getStatusCode();
+        Assert.assertEquals(actualStatusCode,204);
     }
 }
