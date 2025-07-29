@@ -3,6 +3,7 @@ package RequestBuilder;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.json.simple.JSONObject;
 
 import static Common.Authorisations.openWeatherApiKey;
 import static Common.BasePaths.*;
@@ -30,4 +31,32 @@ public class OpenWeatherRequestBuilder {
         return response;
 
     }
+
+
+    public static Response getCreatedWeatherStationResponse() {
+        return RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath + "/" + weatherStationId)
+                .queryParam("appid", openWeatherApiKey)
+                .contentType(ContentType.JSON)
+                .log().all()
+                .get()
+                .then()
+                .extract().response();
+    }
+
+
+    public static Response updateWeatherStationResponse(JSONObject updatedBody) {
+        return RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath + "/" + weatherStationId)
+                .queryParam("appid", openWeatherApiKey)
+                .contentType(ContentType.JSON)
+                .log().all()
+                .body(updatedBody)
+                .put()
+                .then()
+                .extract().response();
+    }
+
 }
