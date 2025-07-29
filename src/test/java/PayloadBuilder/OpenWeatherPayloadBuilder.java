@@ -15,10 +15,12 @@ public class OpenWeatherPayloadBuilder {
 
         return station;
     }
-    public static  JSONObject updateWeatherStationBody(){
+    public static JSONObject updateWeatherStationBody() {
         JSONObject station = new JSONObject();
-        station.put("longitude","-101.36");
-        station.put("altitude","235");
+        station.put("external_id", "ext station id");
+        station.put("name", "Updated station");
+        station.put("latitude", 38.00);
+        station.put("altitude", 235);
 
         return station;
     }
