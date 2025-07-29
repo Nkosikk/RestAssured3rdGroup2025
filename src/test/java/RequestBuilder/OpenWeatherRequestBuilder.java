@@ -11,7 +11,7 @@ import static PayloadBuilder.OpenWeatherPayloadBuilder.updateWeatherStationBody;
 
 public class OpenWeatherRequestBuilder {
 
-    static String weatherStationId;
+    public static String weatherStationId;
     public static Response createOpenWeatherResponse(){
 
 
@@ -33,10 +33,10 @@ public class OpenWeatherRequestBuilder {
     }
 
     // GET weather station
-    public static Response getWeatherStationById() {
+    public static Response getWeatherStationById(String weatherStationId) {
         return RestAssured.given()
                 .baseUri(openWeatherBaseUrl)
-                .basePath(openWeatherPath + "/" + weatherStationId)
+                .basePath(openWeatherPath + "/" + OpenWeatherRequestBuilder.weatherStationId)
                 .queryParam("appid", openWeatherApiKey)
                 .log().all()
                 .get()
@@ -45,10 +45,10 @@ public class OpenWeatherRequestBuilder {
     }
 
     // PUT / update weather station
-    public static Response updateWeatherStationById() {
+    public static Response updateWeatherStationById(String weatherStationId) {
         return RestAssured.given()
                 .baseUri(openWeatherBaseUrl)
-                .basePath(openWeatherPath + "/" + weatherStationId)
+                .basePath(openWeatherPath + "/" + OpenWeatherRequestBuilder.weatherStationId)
                 .contentType(ContentType.JSON)
                 .queryParam("appid", openWeatherApiKey)
                 .log().all()
@@ -59,10 +59,11 @@ public class OpenWeatherRequestBuilder {
     }
 
     // DELETE weather station
-    public static Response deleteWeatherStationById() {
+    public static Response deleteWeatherStationById(String weatherStationId) {
+        OpenWeatherRequestBuilder.weatherStationId = weatherStationId;
         return RestAssured.given()
                 .baseUri(openWeatherBaseUrl)
-                .basePath(openWeatherPath + "/" + weatherStationId)
+                .basePath(openWeatherPath + "/" + OpenWeatherRequestBuilder.weatherStationId)
                 .queryParam("appid", openWeatherApiKey)
                 .log().all()
                 .delete()
