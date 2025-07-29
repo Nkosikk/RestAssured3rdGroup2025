@@ -4,9 +4,11 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
+
 import static Common.Authorisations.openWeatherApiKey;
 import static Common.BasePaths.*;
 import static PayloadBuilder.OpenWeatherPayloadBuilder.createWeatherStationBody;
+
 
 public class OpenWeatherRequestBuilder {
 
@@ -30,4 +32,30 @@ public class OpenWeatherRequestBuilder {
         return response;
 
     }
+    public static Response getWeatherResponse(){
+        return RestAssured.given().queryParam("appid", openWeatherApiKey)
+                .when().get(openWeatherBaseUrl+openWeatherPath+"/"+weatherStationId)
+                .then().log()
+                .all()
+                .extract()
+                .response();
+
+    }
+  /**  public static Response updateWeatherStationResponse(){
+        Response response = RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath + weatherStationId)
+                .contentType(ContentType.JSON)
+                .queryParam("appid", openWeatherApiKey)
+                .log().all()
+                .body(updateWeatherStationBody())
+                .put()
+                .then()
+                .extract().response();
+
+        int actualStatusCode =response.getStatusCode();
+        Assert.assertEquals(actualStatusCode,200);
+
+        return response;
+    }*/
 }

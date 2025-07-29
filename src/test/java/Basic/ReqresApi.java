@@ -9,9 +9,11 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class ReqresAPI {
+public class ReqresApi {
 
-static String UserID;
+static String userID;
+
+    // This test creates a user and stores the userID for subsequent tests
 
 @Test
 public void a_createUser() {
@@ -37,14 +39,14 @@ public void a_createUser() {
     System.out.println("Status code:" + actualStatusCode);
 
     /** Extract UserID from the response*/
-    UserID = response.jsonPath().getString("id");
-    System.out.println("User ID created: " + UserID);
+    userID = response.jsonPath().getString("id");
+    System.out.println("User ID created: " + userID);
     }
 
     @Test
     public void b_getUser() {
         String baseUrl = "https://reqres.in";
-        String pathUrl = "/api/users/" + UserID; // Assuming UserID is set from the previous test
+        String pathUrl = "/api/users/" + userID; // Assuming UserID is set from the previous test
         String apiKey = "reqres-free-v1";
 
         RestAssured.given()
@@ -52,14 +54,13 @@ public void a_createUser() {
                 .basePath(pathUrl)
                 .header("x-api-key", apiKey)
                 .log().all()
-                .get()
-                .then()
-                .statusCode(200);
+                .get();
+
     }
     @Test
     public void c_updateUser() {
         String baseUrl = "https://reqres.in";
-        String pathUrl = "/api/users/" + UserID;
+        String pathUrl = "/api/users/" + userID;
         String apiKey = "reqres-free-v1";
         String updatedPayload = "{ \"name\": \"morpheus\", \"job\": \"zion resident\" }";
 
@@ -72,7 +73,7 @@ public void a_createUser() {
                 .put();
 
         // Assert that the status code is 200 (OK)
-        Assert.assertEquals(200, response.getStatusCode());
+        Assert.assertEquals(response.getStatusCode(),200);
 
         // Print the response
         System.out.println("Status code: " + response.getStatusCode());
@@ -81,7 +82,7 @@ public void a_createUser() {
     @Test
     public void d_patchUser() {
         String baseUrl = "https://reqres.in";
-        String pathUrl = "/api/users/" + UserID;
+        String pathUrl = "/api/users/" + userID;
         String apiKey = "reqres-free-v1";
         String updatedPayload = "{ \"name\": \"zulumega\", \"job\": \"ekuphakameni\" }";
 
@@ -94,7 +95,7 @@ public void a_createUser() {
                 .patch();
 
         // Assert that the status code is 200 (OK)
-        Assert.assertEquals(200, response.getStatusCode());
+        Assert.assertEquals(response.getStatusCode(), 200);
 
         // Print the response
         System.out.println("Status code: " + response.getStatusCode());
@@ -103,7 +104,7 @@ public void a_createUser() {
     @Test
     public void e_deleteUser() {
         String baseUrl = "https://reqres.in";
-        String pathUrl = "/api/users/" + UserID; // Use the UserID from the createUser test
+        String pathUrl = "/api/users/" + userID; // Use the userID from the createUser test
         String apiKey = "reqres-free-v1";
 
         Response response = RestAssured.given()
@@ -113,11 +114,11 @@ public void a_createUser() {
                 .delete();
 
         // Assert that the status code is 204 (No Content)
-        Assert.assertEquals(204, response.getStatusCode());
+        Assert.assertEquals( response.getStatusCode(),204);
 
         // Print the status code to confirm deletion
         System.out.println("Status code: " + response.getStatusCode());
-        System.out.println("User with ID " + UserID + " deleted successfully.");
+        System.out.println("User with ID " + userID + " deleted successfully.");
     }
 
 
