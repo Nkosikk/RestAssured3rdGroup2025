@@ -1,5 +1,6 @@
 package Tests;
 
+import Common.TestDataGenerator;
 import RequestBuilder.OpenWeatherRequestBuilder;
 import org.testng.annotations.Test;
 
@@ -9,10 +10,13 @@ public class OpenWeatherTest {
     @Test
     public void createWeatherStationTest() {
         /**This test is creating a new weather station */
+        TestDataGenerator.generateStationPayload();
         OpenWeatherRequestBuilder.createOpenWeatherResponse()
                 .then()
                 .log()
                 .all()
+                .body("ID", org.hamcrest.Matchers.notNullValue())
+                .body("ID", org.hamcrest.Matchers.not(0))
                 .assertThat()
                 .statusCode(201)
                 .contentType("application/json; charset=utf-8");
@@ -27,9 +31,7 @@ public class OpenWeatherTest {
                 .all()
                 .assertThat()
                 .statusCode(200)
-                .contentType("application/json; charset=utf-8")
-                .body("name", org.hamcrest.Matchers.equalTo("San Francisco Test Station"))
-                .body("latitude", org.hamcrest.Matchers.equalTo(37.76f));
+                .contentType("application/json; charset=utf-8");
     }
 
     @Test(dependsOnMethods = "getWeatherStationTest")

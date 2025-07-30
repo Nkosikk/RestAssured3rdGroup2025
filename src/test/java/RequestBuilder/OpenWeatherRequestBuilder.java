@@ -7,8 +7,8 @@ import io.restassured.response.Response;
 import static Common.Authorisations.openWeatherApiKey;
 import static Common.BasePaths.openWeatherBaseUrl;
 import static Common.BasePaths.openWeatherPath;
+import static Common.TestDataGenerator.generateStationPayload;
 import static PayloadBuilder.OpenWeatherPayloadBuilder.createUpdatedWeatherStationBody;
-import static PayloadBuilder.OpenWeatherPayloadBuilder.createWeatherStationBody;
 
 public class OpenWeatherRequestBuilder {
 
@@ -21,7 +21,7 @@ public class OpenWeatherRequestBuilder {
                 .contentType(ContentType.JSON)
                 .queryParam("appid", openWeatherApiKey)
                 .log().all()
-                .body(createWeatherStationBody())
+                .body(generateStationPayload())
                 .post()
                 .then()
                 .extract().response();
