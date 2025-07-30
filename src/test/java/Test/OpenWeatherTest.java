@@ -7,37 +7,59 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OpenWeatherTest {
 
     @Test
-    public void a_createWeatherStationTest() {
-        OpenWeatherRequestBuilder.CreateopenweatherResponse()
+    public void createWeatherStationTest(){
+        /**This test is creating a new weather station */
+        OpenWeatherRequestBuilder.createOpenWeatherResponse()
                 .then()
                 .log()
                 .all()
                 .assertThat()
-                .statusCode(201);
+                .statusCode(201)
+                .contentType("application/json; charset=utf-8");
     }
 
-    @Test
-    public void b_getWeatherStationTest() {
-        OpenWeatherRequestBuilder.GetopenweatherResponse()
+    @Test(dependsOnMethods ="createWeatherStationTest")
+       public void getCreatedWeatherStationTest(){
+
+        OpenWeatherRequestBuilder.getOpenWeatherResponse()
                 .then()
-                .log()
-                .all()
+//                .log().all()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json; charset=utf-8");
     }
 
-    @Test
-    public void c_updateWeatherStationTest() {
-        OpenWeatherRequestBuilder.UpdateopenweatherResponse()
+    @Test(dependsOnMethods = "getCreatedWeatherStationTest")
+    public void updateWeatherStationTest(){
+        OpenWeatherRequestBuilder.updateOpenWeatherResponse()
                 .then()
-                .log()
-                .all()
+//                .log().all()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json; charset=utf-8");
+    }
+
+    @Test(dependsOnMethods = "updateWeatherStationTest")
+    public void deleteWeatherStationTest(){
+        OpenWeatherRequestBuilder.deleteOpenWeatherResponse()
+                .then()
+//                .log().all()
+                .assertThat()
+                .statusCode(204);
+    }
+
+    @Test(dependsOnMethods = "deleteWeatherStationTest")
+    public void CreatedWeatherStationWithoutNameNegativeTest(){
+
+        OpenWeatherRequestBuilder.createOpenWeatherWithoutNameResponse()
+                .then()
+//                .log().all()
+                .assertThat()
+                .statusCode(400)
+                .contentType("application/json; charset=utf-8");
     }
 
 }
