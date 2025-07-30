@@ -1,11 +1,8 @@
 package Test;
 
 import RequestBuilder.OpenWeatherRequestBuilder;
-import io.restassured.internal.RestAssuredResponseOptionsGroovyImpl;
-import io.restassured.internal.RestAssuredResponseOptionsImpl;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
+
 
 public class OpenWeatherTest {
 
