@@ -29,5 +29,32 @@ public class ReqresRequestBuilder {
         return response;
     }
 
+    public static Response GetReqresResponse() {
+
+        Response response = RestAssured.given()
+                .baseUri(reqres_baseUrl)
+                .basePath(reqres_path + "/" + ReqId)
+                .header("x-api-key", reqres_apiKey)
+                .log().all()
+                .get();
+
+        return response;
+    }
+
+
+    public static Response updateReqresBody() {
+
+        Response response = RestAssured.given()
+                .baseUri(reqres_baseUrl)
+                .basePath(reqres_path + "/" + ReqId)
+                .header("x-api-key", reqres_apiKey)
+                .log().all()
+                .body(ReqresPayloadBuilder.updateReqresBody().toString())
+                .put();
+
+        return response;
+
+
+    }
 
 }

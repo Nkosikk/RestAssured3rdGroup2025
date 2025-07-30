@@ -33,6 +33,17 @@ public class OpenWeatherRequestBuilder {
         return response;
     }
 
+    public  static Response GetopenweatherResponse() {
+        Response response = RestAssured.given()
+                .baseUri(openWeather_baseUrl)
+                .basePath(OpenWeather_path + "/" + weatherStationId)
+                .queryParam("appid", openWeather_apiKey)
+                .log().all()
+                .get();
+
+        return response;
+    }
+
     public static Response UpdateopenweatherResponse() {
         Response response = RestAssured.given()
                 .baseUri(openWeather_baseUrl)
@@ -42,17 +53,6 @@ public class OpenWeatherRequestBuilder {
                 .log().all()
                 .body(OpenWeatherPayloadBuilder.updateWeatherStationBody().toString())
                 .put();
-
-        return response;
-    }
-
-    public  static Response GetopenweatherResponse() {
-        Response response = RestAssured.given()
-                .baseUri(openWeather_baseUrl)
-                .basePath(OpenWeather_path + "/" + weatherStationId)
-                .queryParam("appid", openWeather_apiKey)
-                .log().all()
-                .get();
 
         return response;
     }
