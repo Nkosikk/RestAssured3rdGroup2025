@@ -1,8 +1,7 @@
 package Test;
 
 import RequestBuilder.OpenWeatherRequestBuilder;
-import org.junit.Test;
-
+import org.testng.annotations.Test;
 
 public class OpenWeatherTest {
 
