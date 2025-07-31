@@ -1,5 +1,6 @@
 package RequestBuilder;
 
+import Common.TestDataGenerator;
 import PayloadBuilder.OpenWeatherPayloadBuilder;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -10,6 +11,7 @@ import static Common.Aurhorization.openWeather_apiKey;
 import static Common.BasePaths.OpenWeather_path;
 import static Common.BasePaths.openWeather_baseUrl;
 import static PayloadBuilder.OpenWeatherPayloadBuilder.*;
+import static Common.TestDataGenerator.*;
 
 public class OpenWeatherRequestBuilder {
     // Get the payload from PayloadBuilder class
@@ -23,7 +25,7 @@ public class OpenWeatherRequestBuilder {
                 .contentType(ContentType.JSON)
                 .queryParam("appid", openWeather_apiKey)
                 .log().all()
-                .body(createWeatherStationBody())
+                .body(generateWeatherStationData())
                 .post()
                 .then()
                 .extract().response();

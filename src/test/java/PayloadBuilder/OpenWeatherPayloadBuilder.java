@@ -1,5 +1,6 @@
 package PayloadBuilder;
 
+import Common.TestDataGenerator;
 import com.github.javafaker.Faker;
 import io.restassured.internal.path.json.mapping.JsonObjectDeserializer;
 import netscape.javascript.JSObject;
@@ -15,13 +16,15 @@ import static Common.TestDataGenerator.*;
 public class OpenWeatherPayloadBuilder {
 
     public static JSONObject createWeatherStationBody() {
-        JSONObject stations = new JSONObject();
-        stations.put("external_id", external_id);
-        stations.put("name", stationName);
-        stations.put("latitude", latitude);
-        stations.put("longitude", longitude);
-        stations.put("altitude", altitude);
-       return new JSONObject(stations);
+
+        JSONObject station = new JSONObject();
+        station.put("external_id", TestDataGenerator.generateWeatherStationData().get("external_id"));
+        station.put("name", TestDataGenerator.generateWeatherStationData().get("stationName"));
+        station.put("latitude", TestDataGenerator.generateWeatherStationData().get("latitude"));
+        station.put("longitude", TestDataGenerator.generateWeatherStationData().get("longitude"));
+        station.put("altitude", TestDataGenerator.generateWeatherStationData().get("altitude"));
+       return new JSONObject(station);
+        //return station;
 
     }
 
