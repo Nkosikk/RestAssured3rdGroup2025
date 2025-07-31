@@ -37,6 +37,7 @@ public class OpenWeatherTest {
     @Test(dependsOnMethods = "getWeatherStationTest")
     public void updateWeatherStationTest() {
         /**This test is updating a weather station */
+        TestDataGenerator.generateStationPayload();
         OpenWeatherRequestBuilder.updateOpenWeatherResponse()
                 .then()
                 .log()
