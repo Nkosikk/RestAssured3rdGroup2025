@@ -7,6 +7,7 @@ import io.restassured.response.Response;
 import static Common.Authorisations.openWeatherApiKey;
 import static Common.BasePaths.*;
 import static PayloadBuilder.OpenWeatherPayloadBuilder.createWeatherStationBody;
+import static PayloadBuilder.OpenWeatherPayloadBuilder.updateWeatherStationBody;
 
 public class OpenWeatherRequestBuilder {
 
@@ -53,7 +54,7 @@ public class OpenWeatherRequestBuilder {
                 .contentType(ContentType.JSON)
                 .queryParam("appid", openWeatherApiKey)
                 .log().all()
-                .body(createWeatherStationBody())
+                .body(updateWeatherStationBody())
                 .put()
                 .then()
                 .extract().response();
@@ -62,7 +63,7 @@ public class OpenWeatherRequestBuilder {
 
     public static Response deleteWeatherStation() {
 
-        Response response = RestAssured.given()
+        return RestAssured.given()
                 .baseUri(openWeatherBaseUrl)
                 .basePath(openWeatherPath+ "/" + weatherStationId)
                 .contentType(ContentType.JSON)
@@ -71,6 +72,6 @@ public class OpenWeatherRequestBuilder {
                 .delete()
                 .then()
                 .extract().response();
-        return response;
+
     }
 }
