@@ -23,7 +23,7 @@ public class OpenWeatherTest {
 
         OpenWeatherRequestBuilder.getOpenWeatherResponse()
                 .then()
-//                .log().all()
+                .log().all()
                 .assertThat()
                 .statusCode(200)
                 .contentType("application/json; charset=utf-8");
@@ -33,7 +33,7 @@ public class OpenWeatherTest {
     public void updateWeatherStationTest(){
         OpenWeatherRequestBuilder.updateOpenWeatherResponse()
                 .then()
-//                .log().all()
+                .log().all()
                 .assertThat()
                 .statusCode(200)
                 .contentType("application/json; charset=utf-8");
@@ -43,7 +43,7 @@ public class OpenWeatherTest {
     public void deleteWeatherStationTest(){
         OpenWeatherRequestBuilder.deleteOpenWeatherResponse()
                 .then()
-//                .log().all()
+                .log().all()
                 .assertThat()
                 .statusCode(204);
     }
