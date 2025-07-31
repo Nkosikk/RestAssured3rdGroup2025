@@ -15,10 +15,15 @@ public class OpenWeatherPayloadBuilder {
         //station.put("latitude",Double.parseDouble(Faker));
         String latitudeStr = Faker.instance().address().latitude().replace(",", ".");
         double latitude = Double.parseDouble(latitudeStr);
+        String longitudeStr = Faker.instance().address().longitude().replace(",", ".");
+        double longitude = Double.parseDouble(longitudeStr);
+        int altitudeStr = Faker.instance().number().numberBetween(10, 20);
+        double altitude = (double) altitudeStr;
 //        station.put("latitude", Double.parseDouble(Faker.instance().address().latitude()));
 //        station.put("longitude", Double.parseDouble(Faker.instance().address().longitude()));
-        //station.put("longitude",longitude);
+        station.put("longitude",longitude);
         station.put("altitude",altitude);
+        station.put("latitude",latitude);
 
         return station;
     }
