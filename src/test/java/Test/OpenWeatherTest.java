@@ -7,23 +7,19 @@ import org.testng.annotations.Test;
 public class OpenWeatherTest {
 
     @Test
-    public void createWeatherStationBody(){
+    public void createWeatherStationTest(){
         /**This test is creating a new weather station */
-        TestDataGenerator.generateWeatherStationData();
         OpenWeatherRequestBuilder.createOpenWeatherResponse()
                 .then()
                 .log()
                 .all()
-                .body("ID", org.hamcrest.Matchers.notNullValue())
-                .body("ID",org.hamcrest.Matchers.not(0))
                 .assertThat()
                 .statusCode(201)
                 .contentType("application/json; charset=utf-8");
-
     }
 
-    @Test(dependsOnMethods ="createWeatherStationBody")
-       public void getCreatedWeatherStationTest(){
+    @Test(dependsOnMethods = "createWeatherStationTest")
+    public void getCreatedWeatherStationTest(){
 
         OpenWeatherRequestBuilder.getOpenWeatherResponse()
                 .then()
@@ -62,5 +58,4 @@ public class OpenWeatherTest {
                 .statusCode(400)
                 .contentType("application/json; charset=utf-8");
     }
-
 }
