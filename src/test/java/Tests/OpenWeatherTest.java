@@ -3,8 +3,7 @@ package Tests;
 import RequestBuilder.OpenWeatherRequestBuilder;
 import org.testng.annotations.Test;
 
-import static RequestBuilder.OpenWeatherRequestBuilder.weatherStationId;
-
+@Test
 public class OpenWeatherTest {
 
     @Test
@@ -20,10 +19,9 @@ public class OpenWeatherTest {
     }
 
     @Test(dependsOnMethods = "createWeatherStationTest")
-    public void getCreatedWeatherStationTest() {
-        /** This test gets the weather station created in the previous test */
+    public void getCreatedWeatherStationTest(){
 
-        OpenWeatherRequestBuilder.getWeatherStationById(weatherStationId)
+        OpenWeatherRequestBuilder.getOpenWeatherResponse()
                 .then()
                 .log().all()
                 .assertThat()
@@ -32,10 +30,8 @@ public class OpenWeatherTest {
     }
 
     @Test(dependsOnMethods = "getCreatedWeatherStationTest")
-    public void updateWeatherStationTest() {
-        /** This test updates the weather station created earlier */
-
-        OpenWeatherRequestBuilder.updateWeatherStationById(weatherStationId)
+    public void updateWeatherStationTest(){
+        OpenWeatherRequestBuilder.updateOpenWeatherResponse()
                 .then()
                 .log().all()
                 .assertThat()
@@ -44,13 +40,22 @@ public class OpenWeatherTest {
     }
 
     @Test(dependsOnMethods = "updateWeatherStationTest")
-    public void deleteWeatherStationTest() {
-        /** This test deletes the weather station created earlier */
-
-        OpenWeatherRequestBuilder.deleteWeatherStationById(weatherStationId)
+    public void deleteWeatherStationTest(){
+        OpenWeatherRequestBuilder.deleteOpenWeatherResponse()
                 .then()
                 .log().all()
                 .assertThat()
-                .statusCode(204);  // OpenWeather returns 204 No Content on successful delete
+                .statusCode(204);
+    }
+
+    @Test(dependsOnMethods = "deleteWeatherStationTest")
+    public void CreatedWeatherStationWithoutNameNegativeTest(){
+
+        OpenWeatherRequestBuilder.createOpenWeatherWithoutNameResponse()
+                .then()
+//                .log().all()
+                .assertThat()
+                .statusCode(400)
+                .contentType("application/json; charset=utf-8");
     }
 }
