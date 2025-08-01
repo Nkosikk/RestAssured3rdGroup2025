@@ -1,29 +1,20 @@
 package PayloadBuilder;
 
+import Common.TestDataGenerator;
 import com.github.javafaker.Faker;
 import org.json.simple.JSONObject;
 
 import static Common.TestDataGenerator.*;
 public class OpenWeatherPayloadBuilder {
-
+    static double latitude = TestDataGenerator.latitude;
     public static JSONObject createWeatherStationBody(){
 
         JSONObject station = new JSONObject();
-
-        station.put("external_id",externalId);
-        station.put("name",stationName);
-        //station.put("latitude",Double.parseDouble(Faker));
-        String latitudeStr = Faker.instance().address().latitude().replace(",", ".");
-        double latitude = Double.parseDouble(latitudeStr);
-        String longitudeStr = Faker.instance().address().longitude().replace(",", ".");
-        double longitude = Double.parseDouble(longitudeStr);
-        int altitudeStr = Faker.instance().number().numberBetween(10, 20);
-        double altitude = (double) altitudeStr;
-//        station.put("latitude", Double.parseDouble(Faker.instance().address().latitude()));
-//        station.put("longitude", Double.parseDouble(Faker.instance().address().longitude()));
-        station.put("longitude",longitude);
-        station.put("altitude",altitude);
+        station.put("external_id","ext station id");
+        station.put("name","First station");
         station.put("latitude",latitude);
+        station.put("longitude", TestDataGenerator.longitude);
+        station.put("altitude",TestDataGenerator.altitude);
 
         return station;
     }
@@ -33,7 +24,7 @@ public class OpenWeatherPayloadBuilder {
         JSONObject station = new JSONObject();
         station.put("external_id","ext station id");
         station.put("name","Update first station");
-        station.put("latitude",37.76);
+        station.put("latitude",latitude);
         station.put("longitude",-122.43);
         station.put("altitude",230);
 
@@ -51,7 +42,21 @@ public class OpenWeatherPayloadBuilder {
 
         return station;
     }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
 
 
 
