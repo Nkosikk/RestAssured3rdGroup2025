@@ -4,8 +4,8 @@ import Common.TestDataGenerator;
 import RequestBuilder.OpenWeatherRequestBuilder;
 import org.testng.annotations.Test;
 
+@Test
 public class OpenWeatherTest {
-
     @Test
     public void createWeatherStationTest(){
         /**This test is creating a new weather station */
@@ -23,7 +23,7 @@ public class OpenWeatherTest {
 
         OpenWeatherRequestBuilder.getOpenWeatherResponse()
                 .then()
-//                .log().all()
+                .log().all()
                 .assertThat()
                 .statusCode(200)
                 .contentType("application/json; charset=utf-8");
@@ -33,7 +33,7 @@ public class OpenWeatherTest {
     public void updateWeatherStationTest(){
         OpenWeatherRequestBuilder.updateOpenWeatherResponse()
                 .then()
-//                .log().all()
+                .log().all()
                 .assertThat()
                 .statusCode(200)
                 .contentType("application/json; charset=utf-8");
@@ -43,7 +43,7 @@ public class OpenWeatherTest {
     public void deleteWeatherStationTest(){
         OpenWeatherRequestBuilder.deleteOpenWeatherResponse()
                 .then()
-//                .log().all()
+                .log().all()
                 .assertThat()
                 .statusCode(204);
     }
@@ -58,4 +58,5 @@ public class OpenWeatherTest {
                 .statusCode(400)
                 .contentType("application/json; charset=utf-8");
     }
+
 }
