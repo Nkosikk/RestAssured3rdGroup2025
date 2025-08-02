@@ -6,7 +6,7 @@ import io.restassured.response.Response;
 
 import static Common.Authorisations.openWeatherApiKey;
 import static Common.BasePaths.*;
-import static PayloadBuilder.OpenWeatherPayloadBuilder.createWeatherStationBody;
+import static PayloadBuilder.OpenWeatherPayloadBuilder.*;
 
 public class OpenWeatherRequestBuilder {
 
@@ -29,5 +29,56 @@ public class OpenWeatherRequestBuilder {
 
         return response;
 
+    }
+    public static Response createOpenWeatherWithoutNameResponse(){
+
+        return RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath)
+                .contentType(ContentType.JSON)
+                .queryParam("appid", openWeatherApiKey)
+                .log().all()
+                .body(createWeatherStationWithoutNameBody())
+                .post()
+                .then()
+                .extract().response();
+    }
+
+    public static Response getOpenWeatherResponse(){
+
+        return RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath +"/"+ weatherStationId)
+                .queryParam("appid",openWeatherApiKey)
+                .log().all()
+                .get()
+                .then()
+                .extract().response();
+    }
+
+    public static Response updateOpenWeatherResponse(){
+        return RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath+"/"+weatherStationId)
+                .contentType(ContentType.JSON)
+                .queryParam("appid", openWeatherApiKey)
+                .log().all()
+                .body(updateWeatherStationBody())
+                .put()
+                .then()
+                .extract().response();
+
+    }
+
+    public static Response deleteOpenWeatherResponse(){
+
+        return RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath +"/"+ weatherStationId)
+                .queryParam("appid",openWeatherApiKey)
+                .log().all()
+                .delete()
+                .then()
+                .extract().response();
     }
 }
