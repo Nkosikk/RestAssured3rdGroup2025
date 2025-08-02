@@ -12,7 +12,7 @@ public class DatabaseConnection {
 
         try (java.sql.Connection conn = java.sql.DriverManager.getConnection(url, username, password);
              java.sql.Statement stmt = conn.createStatement();
-             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM leeStation WHERE id = 2")) {
+             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM stations WHERE id = 2")) {
 
             while (rs.next()) {
                 System.out.println(
