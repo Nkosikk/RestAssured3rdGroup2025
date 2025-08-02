@@ -50,16 +50,4 @@ public class OpenWeatherPayloadBuilder {
 
         return station;
     }
-
-    public static Response deleteOpenWeatherResponse(){
-
-        return RestAssured.given()
-                .baseUri(openWeatherBaseUrl)
-                .basePath(openWeatherPath +"/"+ weatherStationId)
-                .queryParam("appid",openWeatherApiKey)
-                .log().all()
-                .delete()
-                .then()
-                .extract().response();
-    }
 }

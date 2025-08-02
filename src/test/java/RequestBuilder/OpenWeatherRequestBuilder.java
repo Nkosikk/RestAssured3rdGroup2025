@@ -10,7 +10,7 @@ import static PayloadBuilder.OpenWeatherPayloadBuilder.*;
 
 public class OpenWeatherRequestBuilder {
 
-    static String weatherStationId;
+    public static String weatherStationId;
     public static Response createOpenWeatherResponse(){
 
 

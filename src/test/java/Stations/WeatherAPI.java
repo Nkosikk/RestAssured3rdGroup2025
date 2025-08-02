@@ -6,6 +6,7 @@ import io.restassured.http.ContentType;
 
 import static Common.Authorisations.openWeatherApiKey;
 import static Common.BasePaths.openWeatherBaseUrl;
+import static RequestBuilder.OpenWeatherRequestBuilder.weatherStationId;
 import static io.restassured.RestAssured.given;
 import org.junit.Test;
 
@@ -13,6 +14,7 @@ public class WeatherAPI {
     private static final String BASE_URL = "http://api.openweathermap.org";
     private static final String PATH = "/data/3.0/stations";
     private static final String APPID = "a8363d70b69d0049f9bf23ac8a6af96f";
+    private static final String PATH_ID = "/data/3.0/stations" + "/" + weatherStationId ;
 
     @Test
     public void createStationTest() {
