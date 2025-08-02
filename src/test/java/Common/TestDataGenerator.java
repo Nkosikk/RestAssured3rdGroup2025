@@ -2,7 +2,7 @@ package Common;
 
 import com.github.javafaker.Faker;
 
-public class FakerGenerator {
+public class TestDataGenerator {
 
     public static double longitude = Double.parseDouble(Faker.instance().address().longitude());
     public static double latidude = Double.parseDouble(Faker.instance().address().latitude());

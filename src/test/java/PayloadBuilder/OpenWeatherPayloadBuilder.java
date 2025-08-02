@@ -1,5 +1,6 @@
 package PayloadBuilder;
 
+import Common.TestDataGenerator;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -13,55 +14,41 @@ import static PayloadBuilder.OpenWeatherPayloadBuilder.updateWeatherStationBody;
 
 public class OpenWeatherPayloadBuilder {
 
+    static double latitude = TestDataGenerator.latidude;
     public static JSONObject createWeatherStationBody(){
 
         JSONObject station = new JSONObject();
         station.put("external_id","ext station id");
         station.put("name","First station");
-        station.put("latitude",37.76);
+        station.put("latitude",latitude);
+        station.put("longitude", TestDataGenerator.longitude);
+        station.put("altitude",TestDataGenerator.altidude);
+
+        return station;
+    }
+
+    public static JSONObject updateWeatherStationBody(){
+
+        JSONObject station = new JSONObject();
+        station.put("external_id","ext station id");
+        station.put("name","Update first station");
+        station.put("latitude",latitude);
         station.put("longitude",-122.43);
         station.put("altitude",230);
 
         return station;
     }
-    public static Response createOpenWeatherWithoutNameResponse(){
 
-        return RestAssured.given()
-                .baseUri(openWeatherBaseUrl)
-                .basePath(openWeatherPath)
-                .contentType(ContentType.JSON)
-                .queryParam("appid", openWeatherApiKey)
-                .log().all()
-                .body(createWeatherStationWithoutNameBody())
-                .post()
-                .then()
-                .extract().response();
-    }
+    public static JSONObject createWeatherStationWithoutNameBody(){
 
-    public static Response getOpenWeatherResponse(){
+        JSONObject station = new JSONObject();
+        station.put("external_id","ext station id");
+        station.put("name","");
+        station.put("latitude",37.76);
+        station.put("longitude",-122.43);
+        station.put("altitude",230);
 
-        return RestAssured.given()
-                .baseUri(openWeatherBaseUrl)
-                .basePath(openWeatherPath +"/"+ weatherStationId)
-                .queryParam("appid",openWeatherApiKey)
-                .log().all()
-                .get()
-                .then()
-                .extract().response();
-    }
-
-    public static Response updateOpenWeatherResponse(){
-        return RestAssured.given()
-                .baseUri(openWeatherBaseUrl)
-                .basePath(openWeatherPath+"/"+weatherStationId)
-                .contentType(ContentType.JSON)
-                .queryParam("appid", openWeatherApiKey)
-                .log().all()
-                .body(updateWeatherStationBody())
-                .put()
-                .then()
-                .extract().response();
-
+        return station;
     }
 
     public static Response deleteOpenWeatherResponse(){
