@@ -6,7 +6,7 @@ import io.restassured.response.Response;
 
 import static Common.Authorisations.openWeatherApiKey;
 import static Common.BasePaths.*;
-import static PayloadBuilder.OpenWeatherPayloadBuilder.createWeatherStationBody;
+import static PayloadBuilder.OpenWeatherPayloadBuilder.*;
 
 public class OpenWeatherRequestBuilder {
 
@@ -28,31 +28,42 @@ public class OpenWeatherRequestBuilder {
         weatherStationId = response.jsonPath().getString("ID");
 
         return response;
-
     }
 
+    public static Response createOpenWeatherWithoutNameResponse(){
+
+        return RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath)
+                .contentType(ContentType.JSON)
+                .queryParam("appid", openWeatherApiKey)
+                .log().all()
+                .body(createWeatherStationWithoutNameBody())
+                .post()
+                .then()
+                .extract().response();
+    }
 
     public static Response getOpenWeatherResponse(){
 
         return RestAssured.given()
                 .baseUri(openWeatherBaseUrl)
-                .basePath(openWeatherPath + "/" + weatherStationId)
-                .queryParam("appid", openWeatherApiKey)
+                .basePath(openWeatherPath +"/"+ weatherStationId)
+                .queryParam("appid",openWeatherApiKey)
                 .log().all()
                 .get()
                 .then()
                 .extract().response();
-
     }
-    public static Response updateOpenWeatherResponse(String name){
 
+    public static Response updateOpenWeatherResponse(){
         return RestAssured.given()
                 .baseUri(openWeatherBaseUrl)
-                .basePath(openWeatherPath + "/" + weatherStationId)
-                .queryParam("appid", openWeatherApiKey)
+                .basePath(openWeatherPath+"/"+weatherStationId)
                 .contentType(ContentType.JSON)
+                .queryParam("appid", openWeatherApiKey)
                 .log().all()
-                .body(PayloadBuilder.OpenWeatherPayloadBuilder.updateWeatherStationBody(weatherStationId, name))
+                .body(updateWeatherStationBody(weatherStationId, "Updated Station"))
                 .put()
                 .then()
                 .extract().response();
@@ -63,12 +74,11 @@ public class OpenWeatherRequestBuilder {
 
         return RestAssured.given()
                 .baseUri(openWeatherBaseUrl)
-                .basePath(openWeatherPath + "/" + weatherStationId)
-                .queryParam("appid", openWeatherApiKey)
+                .basePath(openWeatherPath +"/"+ weatherStationId)
+                .queryParam("appid",openWeatherApiKey)
                 .log().all()
                 .delete()
                 .then()
                 .extract().response();
-
     }
 }
