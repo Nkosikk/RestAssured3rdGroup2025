@@ -1,6 +1,7 @@
 package Tests;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.testng.annotations.Test;
 
 import static Common.BasePaths.countriesBaseUrl;
@@ -24,7 +25,8 @@ public class CountriesTest {
                 .log()
                 .all()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType(ContentType.JSON);
 
     }
 
@@ -43,7 +45,7 @@ public class CountriesTest {
                 .all()
                 .assertThat()
                 .statusCode(200)
-                .body("size()", org.hamcrest.Matchers.equalTo(250) /* Adjust the number based on the actual count of countries */);
+                .body("size()", org.hamcrest.Matchers.equalTo(195) /* Adjust the number based on the actual count of countries */);
     }
     @Test
     public void verifyLanguageForSouthAfricaTest() {
@@ -62,9 +64,10 @@ public class CountriesTest {
                 .statusCode(200)
                 .body("find { it.name.common == 'South Africa' }.languages.sals", org.hamcrest.Matchers.equalTo("South African Sign Language"));
     }
+
     @Test
     public void validateCountrySchemaTest() {
-        /**This test is validating the country schema */
+        /**This test is validating the country schema using JsonPath */
         RestAssured.given()
                 .baseUri(countriesBaseUrl)
                 .basePath(countriesPath)
@@ -77,8 +80,7 @@ public class CountriesTest {
                 .all()
                 .assertThat()
                 .statusCode(200)
-                .body(matchesJsonSchemaInClasspath("schemas/countries-schema.json"));
+                .body(matchesJsonSchemaInClasspath("schemas/countries-schema.json"))
+                .body("name.common[0]", org.hamcrest.Matchers.notNullValue());
     }
-
-
 }
