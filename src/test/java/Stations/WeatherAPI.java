@@ -24,7 +24,7 @@ public class WeatherAPI {
 
     @Test
     public void deleteStationTest() {
-        String stationId = "68825ae7cbd4230001cc0717"; // Replace with the actual station ID you want to delete
+        String stationId = "6876726fcbd4230001cc049e"; // Replace with the actual station ID you want to delete
         Response deleteResponse = given()
                 .baseUri(BASE_URL)
                 .basePath(PATH + "/" + stationId)
@@ -62,9 +62,10 @@ public class WeatherAPI {
                 .body("{\"external_id\": \"Gauteng\", \"name\": \"" + newName + "\", \"latitude\": 37.76, \"longitude\": -122.43, \"altitude\": 123}")
                 .put();
         int statusCode = updateResponse.getStatusCode();
+        boolean isPass = statusCode == 200 && updateResponse.asString().contains(newName);
         System.out.println("Update Station Response: " + updateResponse.asString());
-        System.out.println("Update Station Status: " + (statusCode == 200 ? "PASS" : "FAIL"));
+        System.out.println("Update Station Status: " + (isPass ? "PASS" : "FAIL"));
         System.out.println("Station name updated from '" + oldName + "' to '" + newName + "'.");
-        Assert.assertEquals("Update station should return 200", 200, statusCode);
+        Assert.assertTrue("Update station should return 200 and contain the new name", isPass);
     }
 }

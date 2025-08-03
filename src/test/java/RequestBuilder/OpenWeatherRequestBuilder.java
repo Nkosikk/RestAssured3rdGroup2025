@@ -11,7 +11,7 @@ import static PayloadBuilder.OpenWeatherPayloadBuilder.createWeatherStationBody;
 public class OpenWeatherRequestBuilder {
 
     static String weatherStationId;
-    public static Response createOpenWeatherResponse(){
+    public static Response createOpenWeatherResponse(String externalId){
 
 
         Response response = RestAssured.given()
@@ -20,7 +20,7 @@ public class OpenWeatherRequestBuilder {
                 .contentType(ContentType.JSON)
                 .queryParam("appid", openWeatherApiKey)
                 .log().all()
-                .body(createWeatherStationBody())
+                .body(createWeatherStationBody(externalId))
                 .post()
                 .then()
                 .extract().response();
@@ -28,6 +28,18 @@ public class OpenWeatherRequestBuilder {
         weatherStationId = response.jsonPath().getString("ID");
 
         return response;
+
+    }
+    public static Response getOpenWeatherResponse(){
+
+        return RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath + "/" + weatherStationId)
+                .queryParam("appid", openWeatherApiKey)
+                .log().all()
+                .get()
+                .then()
+                .extract().response();
 
     }
 }
