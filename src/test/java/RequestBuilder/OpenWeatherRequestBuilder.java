@@ -30,6 +30,8 @@ public class OpenWeatherRequestBuilder {
         return response;
 
     }
+
+
     public static Response getOpenWeatherResponse(){
 
         return RestAssured.given()
@@ -38,6 +40,33 @@ public class OpenWeatherRequestBuilder {
                 .queryParam("appid", openWeatherApiKey)
                 .log().all()
                 .get()
+                .then()
+                .extract().response();
+
+    }
+    public static Response updateOpenWeatherResponse(String name){
+
+        return RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath + "/" + weatherStationId)
+                .queryParam("appid", openWeatherApiKey)
+                .contentType(ContentType.JSON)
+                .log().all()
+                .body(PayloadBuilder.OpenWeatherPayloadBuilder.updateWeatherStationBody(weatherStationId, name))
+                .put()
+                .then()
+                .extract().response();
+
+    }
+
+    public static Response deleteOpenWeatherResponse(){
+
+        return RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath + "/" + weatherStationId)
+                .queryParam("appid", openWeatherApiKey)
+                .log().all()
+                .delete()
                 .then()
                 .extract().response();
 
