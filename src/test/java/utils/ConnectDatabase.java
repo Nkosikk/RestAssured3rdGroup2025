@@ -3,6 +3,7 @@ package utils;
 import org.testng.annotations.Test;
 
 public class ConnectDatabase {
+
     @Test
     public void testConnection() {
         String url = "jdbc:mysql://102.222.124.22:3306/ndosian6b8b7_ndosiautomation";
