@@ -3,6 +3,7 @@ package Tests;
 import RequestBuilder.OpenWeatherRequestBuilder;
 import org.testng.annotations.Test;
 
+@Test
 public class OpenWeatherTest {
 
     @Test
@@ -17,42 +18,44 @@ public class OpenWeatherTest {
                 .contentType("application/json; charset=utf-8");
     }
 
-    @Test(dependsOnMethods = "createWeatherStationTest()")
+    @Test(dependsOnMethods = "createWeatherStationTest")
     public void getCreatedWeatherStationTest(){
-        /**This test is getting the created weather station */
-        OpenWeatherRequestBuilder.getWeatherStationId()
+
+        OpenWeatherRequestBuilder.getOpenWeatherResponse()
                 .then()
-                .log()
-                .all()
+                .log().all()
                 .assertThat()
                 .statusCode(200)
                 .contentType("application/json; charset=utf-8");
-
     }
 
-    @Test(dependsOnMethods = "getCreatedWeatherStationTest()")
-    public void updateCreatedWeatherStationTest(){
-        /**This test is updating the created weather station */
-        OpenWeatherRequestBuilder.UpdateWeatherStation()
+    @Test(dependsOnMethods = "getCreatedWeatherStationTest")
+    public void updateWeatherStationTest(){
+        OpenWeatherRequestBuilder.updateOpenWeatherResponse()
                 .then()
-                .log()
-                .all()
+                .log().all()
                 .assertThat()
                 .statusCode(200)
                 .contentType("application/json; charset=utf-8");
-
     }
 
-    @Test(dependsOnMethods = "updateCreatedWeatherStationTest()")
+    @Test(dependsOnMethods = "updateWeatherStationTest")
     public void deleteWeatherStationTest(){
-        /**This test is deleting the created weather station */
-        OpenWeatherRequestBuilder.deleteWeatherStation()
+        OpenWeatherRequestBuilder.deleteOpenWeatherResponse()
                 .then()
-                .log()
-                .all()
+                .log().all()
                 .assertThat()
                 .statusCode(204);
+    }
 
+    @Test(dependsOnMethods = "deleteWeatherStationTest")
+    public void CreatedWeatherStationWithoutNameNegativeTest(){
 
+        OpenWeatherRequestBuilder.createOpenWeatherWithoutNameResponse()
+                .then()
+//                .log().all()
+                .assertThat()
+                .statusCode(400)
+                .contentType("application/json; charset=utf-8");
     }
 }
