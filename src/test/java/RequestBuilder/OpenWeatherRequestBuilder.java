@@ -1,5 +1,7 @@
 package RequestBuilder;
 
+import Utils.DatabaseConnection;
+import Utils.Station;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -12,7 +14,7 @@ public class OpenWeatherRequestBuilder {
 
     static String weatherStationId;
     public static Response createOpenWeatherResponse(){
-
+        Station station = DatabaseConnection.getStationData(); // Fetch from DB
 
         Response response = RestAssured.given()
                 .baseUri(openWeatherBaseUrl)
@@ -20,7 +22,7 @@ public class OpenWeatherRequestBuilder {
                 .contentType(ContentType.JSON)
                 .queryParam("appid", openWeatherApiKey)
                 .log().all()
-                .body(createWeatherStationBody())
+                .body(createWeatherStationBody(station))
                 .post()
                 .then()
                 .extract().response();
