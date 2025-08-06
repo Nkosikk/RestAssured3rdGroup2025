@@ -51,7 +51,8 @@ public class OpenWeatherTest {
     @Test(dependsOnMethods = "deleteWeatherStationTest")
     public void CreatedWeatherStationWithoutNameNegativeTest(){
 
-        OpenWeatherRequestBuilder.createOpenWeatherWithoutNameResponse()
+        /*OpenWeatherRequestBuilder.createOpenWeatherWithoutNameResponse()*/
+        OpenWeatherRequestBuilder.createOpenWeatherResponse("Test Station", "ext123")
                 .then()
 //                .log().all()
                 .assertThat()

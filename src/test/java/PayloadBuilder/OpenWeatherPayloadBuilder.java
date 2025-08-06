@@ -1,21 +1,24 @@
 package PayloadBuilder;
 
 import Common.TestDataGenerator;
+import Utils.DatabaseConnection;
 import org.json.simple.JSONObject;
 
 public class OpenWeatherPayloadBuilder {
 
-    //static double latitude = TestDataGenerator.latitude;
-    public static JSONObject createWeatherStationBody(){
 
-        JSONObject station = new JSONObject();
-        station.put("external_id","ext station id");
-        station.put("name","First station");
-        station.put("latitude",TestDataGenerator.latitude);
-        station.put("longitude", TestDataGenerator.longitude);
-        station.put("altitude",TestDataGenerator.altitude);
+    public static JSONObject createWeatherStationBody(String name, String externalId) {
 
-        return station;
+            DatabaseConnection db = new DatabaseConnection();
+
+            JSONObject station = new JSONObject();
+            station.put("external_id", db.getExternalId());
+            station.put("name", db.getName());
+            station.put("latitude", TestDataGenerator.latitude);
+            station.put("longitude", TestDataGenerator.longitude);
+            station.put("altitude", TestDataGenerator.altitude);
+            return station;
+
     }
 
     public static JSONObject updateWeatherStationBody(){

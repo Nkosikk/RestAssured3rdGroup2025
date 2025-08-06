@@ -11,7 +11,7 @@ import static PayloadBuilder.OpenWeatherPayloadBuilder.*;
 public class OpenWeatherRequestBuilder {
 
     static String weatherStationId;
-    public static Response createOpenWeatherResponse(){
+    public static Response createOpenWeatherResponse(String name, String externalId){
 
 
         Response response = RestAssured.given()
@@ -20,7 +20,7 @@ public class OpenWeatherRequestBuilder {
                 .contentType(ContentType.JSON)
                 .queryParam("appid", openWeatherApiKey)
                 .log().all()
-                .body(createWeatherStationBody())
+                .body(createWeatherStationBody(name,externalId))
                 .post()
                 .then()
                 .extract().response();
@@ -30,7 +30,7 @@ public class OpenWeatherRequestBuilder {
         return response;
     }
 
-    public static Response createOpenWeatherWithoutNameResponse(){
+    /*public static Response createOpenWeatherWithoutNameResponse(){
 
         return RestAssured.given()
                 .baseUri(openWeatherBaseUrl)
@@ -42,6 +42,23 @@ public class OpenWeatherRequestBuilder {
                 .post()
                 .then()
                 .extract().response();
+    }*/
+    public static Response createOpenWeatherResponse() {
+        String name = "Test Station";
+        String externalId = "ext123";
+        Response response = RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherPath)
+                .contentType(ContentType.JSON)
+                .queryParam("appid", openWeatherApiKey)
+                .log().all()
+                .body(createWeatherStationBody(name, externalId))
+                .post()
+                .then()
+                .extract().response();
+
+        weatherStationId = response.jsonPath().getString("ID");
+        return response;
     }
 
     public static Response getOpenWeatherResponse(){
