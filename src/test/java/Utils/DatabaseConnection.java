@@ -12,11 +12,16 @@ public class DatabaseConnection {
 
         try (java.sql.Connection conn = java.sql.DriverManager.getConnection(url, username, password);
              java.sql.Statement stmt = conn.createStatement();
-             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE id = 5")) {
+             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM stations WHERE ID = '1'")) {
+            System.out.println("Connection successful!");
 
             while (rs.next()) {
-                System.out.println("Username: " + rs.getString("username") +
-                                   ", Password: " + rs.getString("password"));
+                System.out.println("ID: " + rs.getString("id") +
+                        ", External ID: " + rs.getString("external_id") +
+                        ", Name: " + rs.getString("name") +
+                        ", Latitude: " + rs.getDouble("latitude") +
+                        ", Longitude: " + rs.getDouble("longitude") +
+                        ", Altitude: " + rs.getInt("altitude"));
             }
         } catch (java.sql.SQLException e) {
             System.out.println("Connection failed: " + e.getMessage());
