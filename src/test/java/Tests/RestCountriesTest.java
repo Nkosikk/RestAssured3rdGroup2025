@@ -2,10 +2,13 @@ package Tests;
 
 
 import java.util.List;
+
 import org.testng.annotations.Test;
 import RequestBuilder.RestCountriesRequestBuilder;
-public class RestCountriesTest {
 
+
+
+public class RestCountriesTest {
 
     @Test
     public void displayAllCountries() {
@@ -16,6 +19,11 @@ public class RestCountriesTest {
                 .getList("$");
 
         countries.forEach(System.out::println);
+    }
+
+    @Test(dependsOnMethods = "displayAllCountries")
+    public void verifyAllCountriesCount() {
+         RequestBuilder.RestCountriesRequestBuilder.getAndVerifyAllCountries();
     }
 }
 
