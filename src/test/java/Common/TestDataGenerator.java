@@ -1,14 +1,22 @@
 package Common;
 
 import com.github.javafaker.Faker;
-
-import java.util.Locale;
+import org.json.simple.JSONObject;
 
 public class TestDataGenerator {
+    private static final Faker faker = new Faker();
 
-    private static final Faker faker = new Faker(new Locale("en-US"));
+    public static JSONObject generateStationPayload() {
+        JSONObject station = new JSONObject();
+        station.put("name", faker.address().cityName() + " Weather Station");
+        station.put("latitude", Double.parseDouble(faker.address().latitude()));
+        station.put("longitude", Double.parseDouble(faker.address().longitude()));
+        station.put("altitude", faker.number().numberBetween(10, 500));
+        station.put("external_id", faker.internet().uuid());
+        return station;
+    }
 
-    public static double longitude = Double.parseDouble(faker.address().longitude().replace(',', '.'));
-    public static double latitude = Double.parseDouble(faker.address().latitude().replace(',', '.'));
-    public static int altidude = faker.number().numberBetween(10, 20);
+
+
 }
+
