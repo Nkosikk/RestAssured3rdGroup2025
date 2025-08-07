@@ -11,7 +11,7 @@
         },
         "required": ["common"]
       }
-    },
-    "required": ["name"]
+    }, "required": ["name"]
   }
 }
+

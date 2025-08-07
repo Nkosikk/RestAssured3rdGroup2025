@@ -18,10 +18,8 @@ public class CountriesTest {
     /**
      * Scenario 1: Schema Validation
      * Priority 1
-     *
      * As a consumer of the API, I want to ensure that the data returned from the API
      * conforms to the published schema so that my application can reliably consume it.
-     *
      * Note: This test validates only the structure of the "name" field from the API response.
      * The schema is stored in /resources/Schemas/sample/countryschema.json
      * I found the original schema was null (i.e., not provided by API),
@@ -49,10 +47,8 @@ public class CountriesTest {
     /**
      * Scenario 2: Confirmation of Countries
      * Priority 2
-     *
      * As a map builder, I want to confirm that there are 195 countries in the world
      * so that my maps are accurate and reflect current geopolitical boundaries.
-     *
      * This test will fail if we expect 195, because as verified manually on Postman,
      * the API returns 250 countries, including territories and regions like Antarctica.
      * Postman Test Screenshot confirms 250 with 1 failure (Antarctica has no languages)
@@ -79,10 +75,8 @@ public class CountriesTest {
     /**
      * Scenario 3: Validate Languages (SASL Check)
      * Priority 3
-     *
      * As the Minister of Education, I want to ensure that South African Sign Language (SASL)
      * is included in the list of South Africa's official languages.
-     *
      * If SASL is not present, the test fails since this requirement is critical for inclusivity.
      * I chose to explicitly fail the test if it's missing.
      */
