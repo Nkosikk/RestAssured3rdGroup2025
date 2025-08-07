@@ -7,14 +7,17 @@ import static Common.BasePaths.restcountriesBasePath;
 import static Common.BasePaths.restcountriesPath;
 
 public class RestCountriesRequestBuilder {
-    public static Response getAllCountriesResponse() {
 
+    public static Response getAllCountriesResponse() {
         return RestAssured.given()
                 .baseUri(restcountriesBasePath)
                 .basePath(restcountriesPath)
-                .log().all()
+                .queryParam("fields", "name")
+                .contentType("application/json")
+                .header("Accept", "application/json")
                 .get()
                 .then()
+                .log().all()
                 .extract().response();
     }
 }
