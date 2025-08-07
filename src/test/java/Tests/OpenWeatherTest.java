@@ -53,7 +53,7 @@ public class OpenWeatherTest {
 
         OpenWeatherRequestBuilder.createOpenWeatherWithoutNameResponse()
                 .then()
-//                .log().all()
+                .log().all()
                 .assertThat()
                 .statusCode(400)
                 .contentType("application/json; charset=utf-8");
