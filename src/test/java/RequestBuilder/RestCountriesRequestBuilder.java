@@ -33,4 +33,5 @@ public class RestCountriesRequestBuilder {
         assertEquals(countries.size(), 195, "Expected 195 countries");
         return countries;
     }
+
 }
