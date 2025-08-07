@@ -59,3 +59,4 @@ public class OpenWeatherTest {
                 .contentType("application/json; charset=utf-8");
     }
 }
+

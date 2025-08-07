@@ -81,4 +81,5 @@ public class OpenWeatherRequestBuilder {
                 .then()
                 .extract().response();
     }
+
 }
