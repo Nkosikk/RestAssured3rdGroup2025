@@ -7,11 +7,13 @@ import io.restassured.response.Response;
 import static Common.Authorisations.openWeatherApiKey;
 import static Common.BasePaths.*;
 import static PayloadBuilder.OpenWeatherPayloadBuilder.*;
+import static Utils.DatabaseConnection.retrievedEmail;
+import static Utils.DatabaseConnection.retrievedPassword;
 
 public class OpenWeatherRequestBuilder {
 
     static String weatherStationId;
-    public static Response createOpenWeatherResponse(){
+    public static Response createOpenWeatherResponse(String email, String password){
 
 
         Response response = RestAssured.given()
@@ -20,7 +22,7 @@ public class OpenWeatherRequestBuilder {
                 .contentType(ContentType.JSON)
                 .queryParam("appid", openWeatherApiKey)
                 .log().all()
-                .body(createWeatherStationBody())
+                .body(createWeatherStationBody(email,password))
                 .post()
                 .then()
                 .extract().response();

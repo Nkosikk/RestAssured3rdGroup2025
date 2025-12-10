@@ -1,15 +1,22 @@
 package Tests;
 
 import RequestBuilder.OpenWeatherRequestBuilder;
+import Utils.DatabaseConnection;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @Test
 public class OpenWeatherTest {
 
+    @BeforeClass
+    public void setup() {
+        // Load database values before running tests
+        DatabaseConnection.testConnection();
+    }
     @Test
     public void createWeatherStationTest(){
         /**This test is creating a new weather station */
-        OpenWeatherRequestBuilder.createOpenWeatherResponse()
+        OpenWeatherRequestBuilder.createOpenWeatherResponse(DatabaseConnection.retrievedEmail, DatabaseConnection.retrievedPassword)
                 .then()
                 .log()
                 .all()

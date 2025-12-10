@@ -1,29 +1,25 @@
 package Utils;
 
-public class DatabaseConnection {
+import org.testng.annotations.Test;
 
-    public static String externalId;
-    public static String stationName;
-    public static  double latitude;
-    public static  double longitude;
-    static int altitude;
+public class DatabaseConnection {
+    public static String retrievedEmail;
+    public static String retrievedPassword;
 
     public static void testConnection() {
-        String url = "jdbc:mysql://102.222.124.22:3306/ndosian6b8b7_ndosiautomation";
-        String username = "ndosian6b8b7_admin";
-        String password = "Aod~J2EGkNY,-C[0";
+        String url = "jdbc:mysql://102.222.124.22:3306/ndosian6b8b7_teaching";
+        String username = "ndosian6b8b7_teaching";
+        String password = "^{SF0a=#~[~p)@l1";
 
         try (java.sql.Connection conn = java.sql.DriverManager.getConnection(url, username, password);
              java.sql.Statement stmt = conn.createStatement();
-             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM stations WHERE id = 2")) {
+             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM login_user WHERE id = 1")) {
 
             while (rs.next()) {
-                externalId = rs.getString("external_id");
-                stationName = rs.getString("name");
-                latitude = Double.parseDouble(rs.getString("latitude"));
-                longitude = Double.parseDouble(rs.getString("longitude"));
-                altitude = Integer.parseInt(rs.getString("altitude"));
-
+                retrievedEmail = rs.getString("email");
+                retrievedPassword = rs.getString("password");
+                System.out.println("Email: " + rs.getString("email") +
+                                   ", Password: " + rs.getString("password"));
             }
         } catch (java.sql.SQLException e) {
             System.out.println("Connection failed: " + e.getMessage());
