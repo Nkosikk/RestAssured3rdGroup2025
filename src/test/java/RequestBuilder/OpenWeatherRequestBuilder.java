@@ -2,7 +2,10 @@ package RequestBuilder;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
+
+import java.io.File;
 
 import static Common.Authorisations.openWeatherApiKey;
 import static Common.BasePaths.*;
@@ -26,6 +29,7 @@ public class OpenWeatherRequestBuilder {
                 .extract().response();
 
         weatherStationId = response.jsonPath().getString("ID");
+        response.then().assertThat().body(JsonSchemaValidator.matchesJsonSchema(new File("src/test/java/Schemas/createWeatherStation.json")));
 
         return response;
     }
