@@ -11,4 +11,5 @@ public class TestDataGenerator {
     public static double longitude = Double.parseDouble(faker.address().longitude().replace(',', '.'));
     public static double latitude = Double.parseDouble(faker.address().latitude().replace(',', '.'));
     public static int altidude = faker.number().numberBetween(10, 20);
+    public static String  name = faker.name().toString();
 }

@@ -18,7 +18,7 @@ public class OpenWeatherTest {
                 .contentType("application/json; charset=utf-8");
     }
 
-    @Test(dependsOnMethods = "createWeatherStationTest")
+    @Test (dependsOnMethods = "createWeatherStationTest")
     public void getCreatedWeatherStationTest(){
 
         OpenWeatherRequestBuilder.getOpenWeatherResponse()
