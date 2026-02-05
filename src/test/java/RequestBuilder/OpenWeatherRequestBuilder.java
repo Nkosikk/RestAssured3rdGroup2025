@@ -1,7 +1,7 @@
 package RequestBuilder;
 
-import Utils.DatabaseConnection;
-import Utils.Station;
+
+
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -14,7 +14,7 @@ public class OpenWeatherRequestBuilder {
 
     static String weatherStationId;
     public static Response createOpenWeatherResponse(){
-        Station station = DatabaseConnection.getStationData(); // Fetch from DB
+
 
         Response response = RestAssured.given()
                 .baseUri(openWeatherBaseUrl)
@@ -22,7 +22,7 @@ public class OpenWeatherRequestBuilder {
                 .contentType(ContentType.JSON)
                 .queryParam("appid", openWeatherApiKey)
                 .log().all()
-                .body(createWeatherStationBody(station))
+                .body(createWeatherStationBody())
                 .post()
                 .then()
                 .extract().response();
@@ -83,4 +83,23 @@ public class OpenWeatherRequestBuilder {
                 .then()
                 .extract().response();
     }
+
+    public static Response createWeatherMeasurementResponse() {
+
+        if (weatherStationId == null) {
+            throw new IllegalStateException("Weather station ID is null. Create station first.");
+        }
+
+        return RestAssured.given()
+                .baseUri(openWeatherBaseUrl)
+                .basePath(openWeatherMeasurementPath)
+                .contentType(ContentType.JSON)
+                .queryParam("appid", openWeatherApiKey)
+                .log().all()
+                .body(createWeatherMeasurementBody(weatherStationId)) // JSONArray
+                .post()
+                .then()
+                .extract().response();
+    }
+
 }
